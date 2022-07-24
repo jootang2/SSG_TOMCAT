@@ -1,6 +1,8 @@
 package com.ll.exam;
 
 
+import com.ll.exam.article.ArticleController;
+import com.ll.exam.member.MemberController;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,7 +14,23 @@ import java.io.IOException;
 @WebServlet("/usr/*")
 public class DispatchServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().append("Work?");
+    protected void doGet(HttpServletRequest req,HttpServletResponse resp) throws ServletException, IOException {
+        Rq rq = new Rq(req, resp);
+
+        MemberController memberController = new MemberController();
+        ArticleController articleController = new ArticleController();
+
+       String url = req.getRequestURI();
+       //getRequestURI 는 "http://localhost:8081/usr/article/list/free?qhdqhd" 에서;
+        // /usr/article/list/free 부분만 가져온다.
+
+        switch ( url ) {
+            case "/usr/member/login" :
+                memberController.showLogin(rq);
+                break;
+            case "/usr/article/list/free" :
+                articleController.showList(rq);
+                break;
+        }
     }
 }
