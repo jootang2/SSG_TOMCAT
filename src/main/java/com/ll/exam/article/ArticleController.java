@@ -16,8 +16,10 @@ public class ArticleController {
         articleDtos.add(new ArticleDto(1,"제목 1", "내용1"));
 
         rq.setAttr("articles", articleDtos);
-
-
         rq.view("usr/article/list");
+    }
+
+    public void showWrite(Rq rq) {
+        rq.view("usr/article/write");
     }
 }
