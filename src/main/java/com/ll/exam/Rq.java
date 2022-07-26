@@ -27,19 +27,16 @@ public class Rq {
         resp.setContentType("text/html; charset=utf-8");
     }
 
-    public int getIntParam(String paramName, int defaultValue) {
+    public String getParam(String paramName, String defaultValue) {
         String value = req.getParameter(paramName);
 
-        if (value == null) {
+        if (value == null || value.trim().length() == 0) {
             return defaultValue;
         }
 
-        try {
-            return Integer.parseInt(value);
-        } catch (NumberFormatException e) {
-            return defaultValue;
-        }
+        return value;
     }
+
 
     public void appendBody(String str) {
         try {
@@ -62,5 +59,12 @@ public class Rq {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    public String getPath() {
+        return req.getRequestURI();
+    }
+
+    public String getMethod() {
+        return req.getMethod();
     }
 }
